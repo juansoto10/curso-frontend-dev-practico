@@ -1,0 +1,2 @@
+- Dentro de index.html se copió el contenido del archivo clase11.html
+- Los estilos dentro de clase 11.html se copiaron dentro del archivo styles.css
