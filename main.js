@@ -6,10 +6,16 @@ const navbarShoppingCart = document.querySelector('.navbar-shopping-cart');
 const purchaseDetail = document.querySelector('.purchase-detail');
 // cards-container
 const cardsContainer = document.querySelector('.cards-container');
+// Product-detail
+const productDetail = document.querySelector('.product-detail');
+// product-detail-close
+const productDetailClose = document.querySelector('.product-detail-close');
 
 navbarEmail.addEventListener('click', toggleDesktopMenu);
 mobileMenuIcon.addEventListener('click', toggleMobileMenu);
 navbarShoppingCart.addEventListener('click', toggleShoppingCart)
+// Close product-detail
+productDetailClose.addEventListener('click', closeProductDetail);
 
 function toggleDesktopMenu() {
   const isPurchaseDetailClosed = purchaseDetail.classList.contains('inactive');
@@ -17,15 +23,20 @@ function toggleDesktopMenu() {
     purchaseDetail.classList.add('inactive');
   }
 
+  closeProductDetail();
+
   desktopMenu.classList.toggle('inactive');
 }
 
 function toggleMobileMenu() {
   const isPurchaseDetailClosed = purchaseDetail.classList.contains('inactive');
+  
 
   if (!isPurchaseDetailClosed) {
     purchaseDetail.classList.add('inactive');
   }
+
+  closeProductDetail();
 
   mobileMenu.classList.toggle('inactive');
 }
@@ -33,36 +44,38 @@ function toggleMobileMenu() {
 function toggleShoppingCart() {
   const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
   const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+  const isProductDetailClosed = productDetail.classList.contains('inactive');
 
   if (!isMobileMenuClosed) {
     mobileMenu.classList.add('inactive');
   } else if (!isDesktopMenuClosed) {
     desktopMenu.classList.add('inactive');
+  } else if (!isProductDetailClosed) {
+    productDetail.classList.add('inactive');
   }
+
 
   purchaseDetail.classList.toggle('inactive');
 }
 
-/*
-<section class="main-container">
-    <div class="cards-container">
+// Open product-detail function
+function openProductDetail() {
+  const isPurchaseDetailClosed = purchaseDetail.classList.contains('inactive');
+  const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
 
-      <div class="product-card">
-        <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
-        <div class="product-info">
-          <div>
-            <p>$120,00</p>
-            <p>Bike</p>
-          </div>
-          <figure>
-            <img src="./icons/bt_add_to_cart.svg" alt="">
-          </figure>
-        </div>
-      </div>
-      
-    </div>
-</section>
-*/
+  if (!isPurchaseDetailClosed) {
+    purchaseDetail.classList.add('inactive');
+  } else if (!isDesktopMenuClosed) {
+    desktopMenu.classList.add('inactive');
+  }
+
+  productDetail.classList.remove('inactive');
+}
+
+// Close product-detail function
+function closeProductDetail() {
+  productDetail.classList.add('inactive');
+}
 
 // Creando dinámicamente los elementos de la sección cards container desde JS:
 
@@ -90,6 +103,7 @@ function renderProducts(list) {
 
     const productImg = document.createElement('img');
     productImg.setAttribute('src', product.image);
+    productImg.addEventListener('click', openProductDetail)
 
     const productInfo = document.createElement('div');
     productInfo.classList.add('product-info');
